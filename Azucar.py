@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 # comentario
 import pygame
 from grano import Grano
