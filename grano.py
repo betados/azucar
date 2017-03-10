@@ -6,14 +6,14 @@ from sumaFuerzas import ListaFuerzas
 class Grano:
     pantalla=0
     color=0
-    radio=20
+    radio=50
     acel= [0.0, 0.0]
     vel = [0.0, 0.0]
     normal = [0.0, 0.0]
     g= 0.0, 0.0005
-    k=0.01
+    k=0.10
     fuerza = 0.0 , 0.0
-    aerodinamica=0.001
+    aerodinamica=0.015
 
     sumaFuerzas = 0, 0
 
@@ -55,7 +55,12 @@ class Grano:
     def setFuerza(self, vector, superposicion):
         if superposicion<0:
             superposicion = superposicion * -1
-        fuerzaElasica = self.k * superposicion * 0.9
+
+        # * mitad por que cada pareja de bolas se comprueba 2 veces y las fuerxas están duplicadas
+        # TODO comprobar las parejas de bolas solo una vez
+        mitad = 0.5
+        rendimiento =0.75
+        fuerzaElasica = self.k * superposicion * mitad * rendimiento
         self.addFuerza( [fuerzaElasica * vector[0], fuerzaElasica * vector[1]])
 
     def getG(self):
@@ -65,8 +70,9 @@ class Grano:
         return self.masa
 
     def setNormal(self, superposicion):
-        fuerza = ((self.modulo(self.vel)*0.1*self.masa)/self.tiempo) + self.k * superposicion * 0.9
-        self.addFuerza([0,  - fuerza - self.fuerzaG[1]])
+        # fuerza = ((self.modulo(self.vel)*0.1*self.masa)/self.tiempo) + self.k * superposicion * 0.9
+        fuerza = self.k * superposicion
+        self.addFuerza([0,  - fuerza ])
 
     def modulo(self, vector):
         return math.sqrt(math.pow(vector[0], 2) + math.pow(vector[1], 2))
