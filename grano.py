@@ -6,7 +6,7 @@ from sumaFuerzas import ListaFuerzas
 class Grano:
     pantalla=0
     color=0
-    radio=50
+    radio=20
     acel= [0.0, 0.0]
     vel = [0.0, 0.0]
     normal = [0.0, 0.0]
